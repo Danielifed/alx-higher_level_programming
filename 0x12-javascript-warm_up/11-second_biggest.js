@@ -1,29 +1,10 @@
 #!/usr/bin/node
-const args = process.argv.slice(2);
-if (arg.length < 2) {
-	console.log(0);
+
+if (process.argv.length > 3) {
+  const array = process.argv.slice(2).map(Number);
+
+  array.splice(array.indexOf(Math.max.apply(null, array)), 1);
+  console.log(Math.max.apply(null, array));
 } else {
-  for (let i = 0; i < args.length; i++) args[i] = Number(args[i]);
-
-  let biggest;
-  let secBiggest;
-
-  if (args[0] >= args[1]) {
-    biggest = args[0];
-    secBiggest = args[1];
-  } else {
-    biggest = args[1];
-    secBiggest = args[0];
-  }
-
-  for (let i = 2; i < args.length; i++) {
-    if (args[i] > biggest) {
-      secBiggest = biggest;
-      biggest = args[i];
-    } else if (args[i] > secBiggest && args[i] < biggest) {
-      secBiggest = args[i];
-    }
-  }
-
-  console.log(secBiggest);
+  console.log(0);
 }
