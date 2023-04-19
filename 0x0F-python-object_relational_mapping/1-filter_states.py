@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+
 """
-    This module will filter states from the database
+    This module will filter all the states from the database
     hbtn_0e_0_usa with name starting with 'N'
 """
 
@@ -17,8 +18,8 @@ if __name__ == "__main__":
 
     cur = hb.cursor()
     cur.execute("""
-            SELECT 
-                * 
+            SELECT
+                *
             FROM
                 states
             WHERE

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+
 """
-    This module will list the cities from the
+    This script will list all the cities from the
     database hbtn_0e_4_usa based on user input
 """
 
@@ -31,4 +32,3 @@ if __name__ == "__main__":
 
     rows = cur.fetchall()
     print(", ".join([row[1] for row in rows]))
-
