@@ -8,9 +8,9 @@ const characterId = 18;
 
 request.get(starWarsUri, (error, response, body) => {
   if (error) {
-    console.error('Error:', error);
+    console.error(error);
   } else if (response.statusCode !== 200) {
-    console.error('API request failed with status code:', response.statusCode);
+    console.error(response.statusCode);
   } else {
     const movies = JSON.parse(body).results;
 
