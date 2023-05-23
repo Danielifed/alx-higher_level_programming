@@ -1,37 +1,36 @@
 #!/usr/bin/node
-
 const request = require('request');
+const args = process.argv.slice(2);
+const id = args[0];
+const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
 
-function getMovieCharacters(movieId) {
-  const starWarsUri = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
-
-  request(starWarsUri, { json: true }, (err, res, body) => {
-    if (err) {
-      console.error(err);
-    } else if (res.statusCode !== 200) {
-      console.error(res.statusCode);
-    } else {
-      const characters = body.characters;
-
-      characters.forEach((characterUrl) => {
-        request(characterUrl, { json: true }, (err, res, body) => {
-          if (err) {
-            console.error(err);
-          } else if (res.statusCode !== 200) {
-            console.error(res.statusCode);
-          } else {
-            console.log(body.name);
-          }
-        });
-      });
-    }
+function getEndpoints () {
+  return new Promise((resolve, reject) => {
+    request.get(url, (err, res, body) => {
+      if (err) reject(err);
+      resolve(JSON.parse(body).characters);
+    });
   });
 }
 
-const movieId = process.argv[2]
-
-if (movieId && !isNaN(movieId)) {
-  getMovieCharacters(movieId);
-} else {
-  console.log('Please provide a valid Movie ID.');
+async function getCharacters (characters) {
+  for (const character of characters) await getCharacter(character);
 }
+
+function getCharacter (character) {
+  return new Promise((resolve, reject) => {
+    request.get(character, (err, res, body) => {
+      if (err) console.log(err);
+      console.log(JSON.parse(body).name);
+      resolve();
+    });
+  });
+}
+
+getEndpoints()
+  .then(data => {
+    return getCharacters(data);
+  })
+  .catch(err => {
+    console.log(err);
+  });
