@@ -2,10 +2,10 @@
 
 const request = require('request');
 
-const movieId = process.argv[2];
+const id = process.argv[2];
 
 
-const starWarsUri = `https://swapi-api.alx-tools.com/api/films/:id`;
+const starWarsUri = `https://swapi-api.alx-tools.com/api/films/${id}`;
 
 request.get(starWarsUri, (error, response, body) => {
   if (error) {
