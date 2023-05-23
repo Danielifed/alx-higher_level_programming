@@ -2,22 +2,23 @@
 
 const request = require('request');
 
-const starWarsUri = process.argv[2];
+const apiUrl = 'https://swapi-api.alx-tools.com/api/films/';
+const characterId = '18';
 
-const characterId = 18;
-
-request.get(starWarsUri, (error, response, body) => {
-  if (error) {
-    console.error(error);
-  } else if (response.statusCode !== 200) {
-    console.error(response.statusCode);
-  } else {
-    const movies = JSON.parse(body).results;
-
-    const filteredMovies = movies.filter((movie) => {
-      return movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`);
-    });
-
-    console.log('', filteredMovies.length);
+request(apiUrl, (err, res, body) => {
+  if (err) {
+    console.log(err);
+    return;
   }
+
+  const films = JSON.parse(body).results;
+  let count = 0;
+
+  for (const film of films) {
+    if (film.characters.includes(characterId)) {
+      count++;
+    }
+  }
+
+  console.log(count);
 });
