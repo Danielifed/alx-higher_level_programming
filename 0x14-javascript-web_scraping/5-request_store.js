@@ -1,21 +1,10 @@
 #!/usr/bin/node
 
-const request = require('request');
 const fs = require('fs');
+const request = require('request');
 
-const url = process.argv[2];
-const filePath = process.argv[3];
+const [url, fileName] = process.argv.slice(2);
 
-request.get(url, (error, response, body) => {
-  if (error) {
-    console.error('', error);
-  } else {
-    fs.writeFile(filePath, body, 'utf-8', (error) => {
-      if (error) {
-        console.error('', error);
-      } else {
-        console.log('', filePath);
-      }
-    });
-  }
-});
+request(url)
+  .pipe(fs.createWriteStream(fileName))
+  .on('error', console.error);
